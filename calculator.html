@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background-color: #6b7280;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .calc {
+        width: 100%;
+        max-width: 260px;
+        background-color: #1f2937;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      input {
+        width: 100%;
+        height: 45px;
+        margin-bottom: 8px;
+        font-size: 18px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background-color: #f3f4f6;
+      }
+
+      #displayPreview {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+
+      button {
+        height: 45px;
+        font-size: 18px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        background-color: #9ca3af;
+        transition: 0.2s;
+      }
+
+      button:hover {
+        background-color: #d1d5db;
+      }
+
+      button:active {
+        transform: scale(0.95);
+      }
+
+      .operator {
+        background-color: #f59e0b;
+        color: #fff;
+      }
+
+      .operator:hover {
+        background-color: #d97706;
+      }
+
+      .equal {
+        background-color: #22c55e;
+        color: #fff;
+      }
+
+      .equal:hover {
+        background-color: #16a34a;
+      }
+
+      .clear {
+        grid-column: span 2;
+        background-color: #ef4444;
+        color: #fff;
+      }
+
+      .clear:hover {
+        background-color: #dc2626;
+      }
+
+      .backspace {
+        grid-column: span 2;
+        background-color: #3b82f6;
+        color: #fff;
+      }
+
+      .backspace:hover {
+        background-color: #2563eb;
+      }
+
+      @media (max-width: 480px) {
+        .calc {
+          max-width: 220px;
+          padding: 12px;
+        }
+
+        button {
+          height: 42px;
+          font-size: 16px;
+        }        
+      }
+      #calc{
+        border: 1px solid black;
+        margin-top: 7px;
+        padding: 10px 0px;
+        width: 100%;
+        text-align: center;
+        background-color: #212f8e;
+        border-radius: 8px;
+      }
+      #calc a{
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+        font-weight: 400;
+        
+      }
+
+      
+    </style>
+  </head>
+
+  <body>
+    <form>
+      <div class="calc">
+        <input type="text" id="displayPreview" readonly onclick="usePreview()"/>
+        <input type="text" id="display" placeholder="0" readonly />
+
+        <div class="buttons">
+          <button type="button" onclick="press('7')">7</button>
+          <button type="button" onclick="press('8')">8</button>
+          <button type="button" onclick="press('9')">9</button>
+          <button type="button" class="operator" onclick="press('/')">/</button>
+
+          <button type="button" onclick="press('4')">4</button>
+          <button type="button" onclick="press('5')">5</button>
+          <button type="button" onclick="press('6')">6</button>
+          <button type="button" class="operator" onclick="press('*')">*</button>
+
+          <button type="button" onclick="press('1')">1</button>
+          <button type="button" onclick="press('2')">2</button>
+          <button type="button" onclick="press('3')">3</button>
+          <button type="button" class="operator" onclick="press('-')">-</button>
+
+          <button type="button" onclick="press('0')">0</button>
+          <button type="button" onclick="press('.')">.</button>
+          <button type="submit" class="equal">=</button>
+          <button type="button" class="operator" onclick="press('+')">+</button>
+
+          <!-- NEW BUTTONS -->
+          <button type="button" class="backspace" onclick="deleteLast()">⌫</button>
+          <button type="button" class="clear" onclick="clearDisplay()">Clear</button>
+        </div>
+        <div id="calc"><a href="index.html">Go To Customized Multiplication-THK</a></div>
+      </div>
+    </form>
+
+    <script>
+      function usePreview() {
+  let preview = document.getElementById("displayPreview").value;
+  let input = document.getElementById("display");
+
+  if (preview) {
+    input.value = preview;
+
+    // move cursor to end
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+  }
+}
+      const input = document.getElementById("display");
+
+      function moveCursorToEnd() {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+
+      function press(v) {
+        input.value += v;
+        moveCursorToEnd();
+      }
+
+      function deleteLast() {
+        input.value = input.value.slice(0, -1);
+        moveCursorToEnd();
+      }
+
+      function clearDisplay() {
+        input.value = "";
+        document.getElementById("displayPreview").value = "";
+        moveCursorToEnd();
+      }
+
+      // Prevent cursor from going middle
+      input.addEventListener("click", moveCursorToEnd);
+      input.addEventListener("keyup", moveCursorToEnd);
+
+      document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let exp = input.value;
+        document.getElementById("displayPreview").value = exp;
+
+        try {
+          let ans = eval(exp);
+          input.value = ans;
+        } catch {
+          input.value = "Error";
+        }
+
+        moveCursorToEnd();
+      });
+    </script>
+  </body>
+</html>
