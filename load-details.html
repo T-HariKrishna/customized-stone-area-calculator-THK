@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page Title</title>
+    <link rel="stylesheet" href="main.css" />
+    <style>
+      body {
+        background: #a7d4cb;
+      }
+      .load-details {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #c7e9e6;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        font-family: sans-serif;
+      }
+
+      .load-details h1 {
+        margin-bottom: 20px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        font-size: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 19px;
+      }
+
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+      }
+
+      .save-btn {
+        display: block;
+        margin: 20px auto;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .save-btn:hover {
+        transform: translateY(-2px);
+        /* box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4); */
+      }
+
+      .save-btn:active {
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="load-details">
+      <h1>Load Details</h1>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="loadDate">Load Date *</label>
+          <input type="date" id="loadDate" required />
+        </div>
+
+        <div class="form-group">
+          <label for="vehicleNo">Vehicle Number *</label>
+          <input type="text" id="vehicleNo" placeholder="AP39AB1234" required />
+        </div>
+
+        <div class="form-group">
+          <label for="driverName">Driver Name *</label>
+          <input
+            type="text"
+            id="driverName"
+            placeholder="Enter Driver Name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="miningOwner">Mining Owner Name *</label>
+          <input
+            type="text"
+            id="miningOwner"
+            placeholder="Enter Mining Owner Name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="miningOwnerPhone">Mining Owner Name Phone No *</label>
+          <input
+            type="text"
+            id="miningOwnerPhone"
+            placeholder="Enter Mining Owner Phone No"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="factoryOwner">Factory Owner Name *</label>
+          <input
+            type="text"
+            id="factoryOwner"
+            placeholder="Enter Factory Owner Name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="factoryPhone">Factory Owner Phone</label>
+          <input
+            type="tel"
+            id="factoryPhone"
+            maxlength="10"
+            placeholder="Optional"
+          />
+        </div>
+
+        <!-- <div class="form-group">
+          <label for="stoneType">Stone Type</label>
+          <input
+            type="text"
+            id="stoneType"
+            placeholder="Black Granite / Marble"
+          />
+        </div> -->
+
+        <div class="form-group full-width">
+          <label for="remarks">Remarks</label>
+          <textarea
+            id="remarks"
+            rows="3"
+            placeholder="Optional notes..."
+          ></textarea>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="save-btn">Save Details</button>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector(".save-btn").addEventListener("click", () => {
+        const loadDetails = {
+          DateOfLoading: document.getElementById("loadDate").value,
+          vehicleNo: document.getElementById("vehicleNo").value,
+          driverName: document.getElementById("driverName").value,
+          miningOwner: document.getElementById("miningOwner").value,
+          miningOwnerPhone: document.getElementById("miningOwnerPhone").value,
+          factoryOwner: document.getElementById("factoryOwner").value,
+          factoryPhone: document.getElementById("factoryPhone").value,
+          remarks: document.getElementById("remarks").value,
+        };
+
+        localStorage.setItem("loadDetails", JSON.stringify(loadDetails));
+
+        window.location.href = "index.html";
+      });
+      //Date field
+      document.getElementById("loadDate").value = new Date()
+        .toISOString()
+        .split("T")[0];
+    </script>
+  </body>
+</html>
