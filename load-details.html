@@ -93,7 +93,13 @@
 
         <div class="form-group">
           <label for="vehicleNo">Vehicle Number *</label>
-          <input type="text" id="vehicleNo" placeholder="AP39AB1234" required />
+          <input
+            type="text"
+            id="vehicleNo"
+            placeholder="AP39AB1234"
+            oninput="this.value = this.value.toUpperCase()"
+            required
+          />
         </div>
 
         <div class="form-group">
@@ -102,6 +108,7 @@
             type="text"
             id="driverName"
             placeholder="Enter Driver Name"
+            oninput="this.value = this.value.toUpperCase()"
             required
           />
         </div>
@@ -112,6 +119,7 @@
             type="text"
             id="miningOwner"
             placeholder="Enter Mining Owner Name"
+            oninput="this.value = this.value.toUpperCase()"
             required
           />
         </div>
@@ -131,6 +139,7 @@
             type="text"
             id="factoryOwner"
             placeholder="Enter Factory Owner Name"
+            oninput="this.value = this.value.toUpperCase()"
             required
           />
         </div>
