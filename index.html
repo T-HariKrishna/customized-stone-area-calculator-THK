@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
   <head>
-    <title>Customized Multiplication</title>
+    <title>Customized-Stone-Area-THK</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -31,6 +32,72 @@
         font-weight: 700;
         font-family: Arial, Helvetica, sans-serif;
       }
+            
+ .navbar{
+    /* background:#ffffff; */
+    /* box-shadow:0 2px 15px rgba(0,0,0,0.08); */
+    padding:15px 40px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    /* position:sticky; */
+    top:0;
+    /* z-index:1000; */
+    }
+
+
+
+.nav-links{
+    display:flex;
+    gap:20px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#333;
+    font-size:22px;
+    font-weight:600;
+
+    padding:10px 18px;
+    border-radius:10px;
+
+    transition:all 0.3s ease;
+}
+
+.nav-links a:hover{
+    background:#2563eb;
+    color:white;
+    transform:translateY(-2px);
+}
+
+.saveBtnContainer{
+      display: flex;
+        justify-content: center;
+}
+#saveBtn{
+ display: block;
+        margin-top
+        : 20px;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        font-size: 19px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+}
+
+/* .nav-links a.active{
+    background:#2563eb;
+    color:white;
+} */
+
+
+      
 
       .calculator-wrapper {
         background: rgb(200, 237, 233);
@@ -308,6 +375,8 @@
         margin-bottom: 30px;
       }
 
+   
+
       @keyframes pulse {
         0%,
         100% {
@@ -317,12 +386,88 @@
           transform: scale(1.1);
         }
       }
+       #loadInfo {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 10px 15px;
+  /* background: #ffffff; */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  /* border-left: 5px solid #007bff; */
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+#loadInfo h3 {
+  margin: 0 0 15px;
+  text-align: center;
+  color: #007bff;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+#loadInfo p {
+  margin: 8px 0;
+  padding: 8px 12px;
+  /* background: #f8f9fa; */
+  border-radius: 6px;
+  font-size: 19px;
+}
+
+#loadInfo strong {
+  color: #333;
+  display: inline-block;
+  min-width: 140px;
+}
+    
+#dateOfLoading{
+      margin-left: 16px;
+    }
+    #showVehicle{
+      margin-left: 100px;
+    }
+    #showDriver{
+      
+      margin-left: 100px;
+    }#showMining{
+      
+      margin-left: 100px;
+    }#showOwnerPhone{
+       margin-left: 12px;
+
+     }#showFactory{
+      margin-left: 100px;
+     }
 
       /* ── Mobile layout ── */
       @media (min-width: 390px) and (max-width: 440px) {
+        #loadInfo p{
+          padding: 0;
+          font-size: 17px;
+        }
+        #dateOfLoading{
+      margin-left: 3px;
+    }
+        #showVehicle
+     {
+      margin-left: 65px;
+    }#showDriver{
+      
+      margin-left:65px;
+    }#showMining{
+      
+      margin-left: 65px;
+    }#showOwnerPhone{
+       margin-left: 0px;
+
+     }#showFactory{
+      margin-left: 65px;
+     }
         body {
           padding: 20px 6px;
         }
+     
 
         .calculator-wrapper {
           padding: 12px 8px;
@@ -420,7 +565,38 @@
           /* margin-right: 57px; */
           margin-bottom: 20px;
         }
+
+        .navbar{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px;
+        }
+
+    .logo{
+        font-size:20px;
+        }
+
+    .nav-links{
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .nav-links a{
+        font-size:15px;
+    }
+    .nav-links a:hover{
+    background:#2563eb;
+    color:white;
+    transform:translateY(-2px);
+    }
       }
+
+     
+     
+     
+  
+</style>
     </style>
   </head>
 
@@ -428,31 +604,27 @@
     <div class="calculator-wrapper">
       <p id="date"></p>
       <h1>Stone Area Calculator - THK</h1>
-      <div id="container">
-        <div class="row">
-          <input
-            type="number"
-            step="0.5"
-            min="1"
-            class="num1"
-            placeholder="Size"
-            value="2.5"
-          />
-          <span class="mul1">×</span>
-          <input
-            value="2"
-            type="number"
-            step="0.5"
-            class="num2"
-            placeholder="Size"
-          />
-          <span class="result">= 0</span>
-          <span class="spacer"></span>
-          <span class="mul2">×</span>
-          <input type="number" step="0.5" class="num3" placeholder="No.of" />
-          <span class="final">= 0</span>
-          <button class="delete-btn" onclick="deleteRow(event)">✕</button>
+      <nav class="navbar">
+        
+        <div class="nav-links">
+          <a href="load-details.html" class="active">📦 Load Details</a>
+          <a href="history.html">📋 History</a>
         </div>
+      </nav>
+      <div id="loadInfo">
+  <h3>Load Information</h3>
+  
+  <p><strong>Date Of Loading Vehicle</strong> <span id="dateOfLoading"></span></p>
+  <p><strong>Vehicle</strong> <span id="showVehicle"></span></p>
+
+  <p><strong>Driver</strong> <span id="showDriver"></span></p>
+
+  <p><strong>Mining Owner</strong> <span id="showMining"></span></p>
+  <p><strong>Mining Owner Phone No</strong> <span id="showOwnerPhone"></span></p>
+  
+  <p><strong>Factory Owner</strong> <span id="showFactory"></span></p>
+</div>
+      <div id="container">
         <div class="row">
           <input
             type="number"
@@ -1361,6 +1533,12 @@
         <h2>Total Squares / మొత్తం చదరాలు</h2>
         <span id="total-chadaralu">0</span>
       </div>
+      <!-- <div class="saveBtnContainer">
+        <button id="saveBtn">Save in DB</button>
+      </div> -->
+      <div class="saveBtnContainer">
+        <button id="saveBtn" onclick="downloadImage()">Download Image </button>
+      </div>
 
       <div style="text-align: center; margin-top: 20px">
         <button class="delete-all-btn" onclick="deleteAllRows()">
@@ -1375,8 +1553,92 @@
       <div id="calc"><a href="calculator.html">Go To Calculator</a></div>
     </div>
 
+    
+
     <script>
-      //To refresg page
+
+//reload the load detials
+const loadDetails =
+  JSON.parse(localStorage.getItem("loadDetails"));
+
+if (loadDetails) {
+
+  document.getElementById("dateOfLoading").textContent =": "+
+    loadDetails.DateOfLoading || "";
+  
+    document.getElementById("showVehicle").textContent =": "+
+    loadDetails.vehicleNo || "";
+
+  document.getElementById("showDriver").textContent =": "+
+    loadDetails.driverName || "";
+
+  document.getElementById("showMining").textContent =": "+
+    loadDetails.miningOwner || "";
+    document.getElementById("showOwnerPhone").textContent =": "+
+      loadDetails.miningOwnerPhone || "";
+    
+  document.getElementById("showFactory").textContent =": "+
+    loadDetails.factoryOwner || "";
+}
+
+//download image
+      function downloadImage() {
+  const tempDiv = document.createElement("div");
+
+  // Add date
+  tempDiv.appendChild(
+    document.getElementById("date").cloneNode(true)
+  );
+
+  // Add heading
+  tempDiv.appendChild(
+    document.querySelector("h1").cloneNode(true)
+  );
+
+  // Load info
+  tempDiv.appendChild(
+    document.getElementById("loadInfo").cloneNode(true)
+  );
+  // Add all rows
+  tempDiv.appendChild(
+    document.getElementById("container").cloneNode(true)
+  );
+
+  // Add totals
+  tempDiv.appendChild(
+    document.querySelector(".total-stones").cloneNode(true)
+  );
+
+  tempDiv.appendChild(
+    document.querySelector(".total-section").cloneNode(true)
+  );
+
+  tempDiv.appendChild(
+    document.querySelector(".total-chadaralu-section").cloneNode(true)
+  );
+
+  // Keep it off-screen
+  tempDiv.style.position = "absolute";
+  tempDiv.style.left = "-9999px";
+  tempDiv.style.background = "white";
+  tempDiv.style.padding = "20px";
+
+  document.body.appendChild(tempDiv);
+
+  html2canvas(tempDiv, {
+  scale: 1,
+  backgroundColor: "#ffffff"
+}).then(canvas => {
+  const imgData = canvas.toDataURL("image/jpeg", 0.8);
+
+  const link = document.createElement("a");
+  link.href = imgData;
+  link.download = `StoneReport_${crypto.randomUUID()}.jpg`;
+  link.click();
+  document.body.removeChild(tempDiv);
+});
+}
+      //To refresh page
       function refreshPage() {
         window.location.reload();
       }
