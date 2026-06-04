@@ -36,8 +36,8 @@
  .navbar{
     /* background:#ffffff; */
     /* box-shadow:0 2px 15px rgba(0,0,0,0.08); */
-    padding:15px 40px;
-
+    /* padding:15px 40px; */
+    /* border: 1px solid black; */
     display:flex;
     justify-content:center;
     align-items:center;
@@ -386,6 +386,13 @@
           transform: scale(1.1);
         }
       }
+      #loadInfo h3 {
+        margin: 0 0 30px;
+        text-align: center;
+        color: #007bff;
+        font-size: 24px;
+        font-weight: 600;
+      }
        #loadInfo {
   max-width: 700px;
   margin: 20px auto;
@@ -395,17 +402,10 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   /* border-left: 5px solid #007bff; */
   font-size: 19px;
-  line-height: 1.2;
+  line-height: 0.4;
   font-weight: bold;
 }
 
-#loadInfo h3 {
-  margin: 0 0 15px;
-  text-align: center;
-  color: #007bff;
-  font-size: 24px;
-  font-weight: 600;
-}
 
 #loadInfo p {
   margin: 8px 0;
@@ -416,7 +416,7 @@
 }
 
 #loadInfo strong {
-  color: #333;
+  color: black;
   display: inline-block;
   min-width: 140px;
 }
@@ -445,6 +445,7 @@
         #loadInfo p{
           padding: 0;
           font-size: 17px;
+          line-height: 1;
         }
         #dateOfLoading{
       margin-left: 3px;
@@ -567,7 +568,7 @@
         }
 
         .navbar{
-        padding:15px 20px;
+        /* padding:15px 20px; */
         flex-direction:column;
         gap:15px;
         }
@@ -608,7 +609,7 @@
         
         <div class="nav-links">
           <a href="load-details.html" class="active">📦 Load Details</a>
-          <a href="#">📋 History</a>
+          <a href="history.html">📋 History</a>
         </div>
       </nav>
       <div id="loadInfo">
@@ -625,6 +626,30 @@
   <p><strong>Factory Owner</strong> <span id="showFactory"></span></p>
 </div>
       <div id="container">
+        <div class="row">
+          <input
+            type="number"
+            step="0.5"
+            min="1"
+            class="num1"
+            placeholder="Size"
+            value="2.5"
+          />
+          <span class="mul1">×</span>
+          <input
+            value="2"
+            type="number"
+            step="0.5"
+            class="num2"
+            placeholder="Size"
+          />
+          <span class="result">= 0</span>
+          <span class="spacer"></span>
+          <span class="mul2">×</span>
+          <input type="number" step="0.5" class="num3" placeholder="No.of" />
+          <span class="final">= 0</span>
+          <button class="delete-btn" onclick="deleteRow(event)">✕</button>
+        </div>
         <div class="row">
           <input
             type="number"
