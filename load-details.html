@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Page Title</title>
+    <title>Load Details</title>
     <link rel="stylesheet" href="main.css" />
     <style>
       body {
@@ -79,16 +79,89 @@
       .save-btn:active {
         transform: translateY(0);
       }
+
+      .alert-popup {
+        display: none;
+        position: fixed;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        min-width: 300px;
+        text-align: center;
+      }
+
+      .alert-popup p {
+        margin-bottom: 15px;
+        font-size: 19px;
+        color: black;
+        font-family: sans-serif;
+      }
+
+      .alert-popup button {
+        background: #4f8a7a;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .alert-popup button:hover {
+        opacity: 0.9;
+      }
+
+      .form-group {
+        position: relative;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding-right: 35px;
+        box-sizing: border-box;
+      }
+
+      .clear-btn {
+        position: absolute;
+        right: 12px;
+        bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        color: #666;
+        user-select: none;
+      }
+
+      .clear-btn:hover {
+        color: #000;
+      }
     </style>
   </head>
   <body>
+    <script src="https://unpkg.com/imask"></script>
+
+    <div id="customAlert" class="alert-popup">
+      <p id="alertMessage"></p>
+      <button onclick="closeAlert()">OK</button>
+    </div>
+
     <div class="load-details">
       <h1>Load Details</h1>
 
       <div class="form-grid">
         <div class="form-group">
           <label for="loadDate">Load Date *</label>
-          <input type="date" id="loadDate" required />
+          <input
+            type="text"
+            id="loadDate"
+            placeholder="Ex: DD/MM/YYYY"
+            maxlength="10"
+          />
+          <span class="clear-btn" onclick="clearField('loadDate')">✕</span>
+          <small id="dateError"></small>
         </div>
 
         <div class="form-group">
@@ -96,10 +169,13 @@
           <input
             type="text"
             id="vehicleNo"
-            placeholder="AP39AB1234"
+            placeholder="Ex: AP39AB1234"
             oninput="this.value = this.value.toUpperCase()"
+            maxlength="10"
             required
           />
+
+          <span class="clear-btn" onclick="clearField('vehicleNo')">✕</span>
         </div>
 
         <div class="form-group">
@@ -111,6 +187,7 @@
             oninput="this.value = this.value.toUpperCase()"
             required
           />
+          <span class="clear-btn" onclick="clearField('driverName')">✕</span>
         </div>
 
         <div class="form-group">
@@ -122,6 +199,7 @@
             oninput="this.value = this.value.toUpperCase()"
             required
           />
+          <span class="clear-btn" onclick="clearField('miningOwner')">✕</span>
         </div>
         <div class="form-group">
           <label for="miningOwnerPhone">Mining Owner Name Phone No *</label>
@@ -131,6 +209,9 @@
             placeholder="Enter Mining Owner Phone No"
             required
           />
+          <span class="clear-btn" onclick="clearField('miningOwnerPhone')"
+            >✕</span
+          >
         </div>
 
         <div class="form-group">
@@ -142,16 +223,19 @@
             oninput="this.value = this.value.toUpperCase()"
             required
           />
+          <span class="clear-btn" onclick="clearField('factoryOwner')">✕</span>
         </div>
 
         <div class="form-group">
           <label for="factoryPhone">Factory Owner Phone</label>
+
           <input
             type="tel"
             id="factoryPhone"
             maxlength="10"
             placeholder="Optional"
           />
+          <span class="clear-btn" onclick="clearField('factoryPhone')">✕</span>
         </div>
 
         <!-- <div class="form-group">
@@ -160,8 +244,8 @@
             type="text"
             id="stoneType"
             placeholder="Black Granite / Marble"
-          />
-        </div> -->
+            />
+          </div> -->
 
         <div class="form-group full-width">
           <label for="remarks">Remarks</label>
@@ -170,6 +254,7 @@
             rows="3"
             placeholder="Optional notes..."
           ></textarea>
+          <span class="clear-btn" onclick="clearField('remarks')">✕</span>
         </div>
       </div>
       <div class="btn-container">
@@ -178,7 +263,163 @@
     </div>
 
     <script>
+      function clearField(id) {
+        document.getElementById(id).value = "";
+        document.getElementById(id).focus();
+      }
+
+      //custom pop up messages
+      function showAlert(message) {
+        document.getElementById("alertMessage").textContent = message;
+        document.getElementById("customAlert").style.display = "block";
+      }
+
+      function closeAlert() {
+        document.getElementById("customAlert").style.display = "none";
+      }
+
+      //IMask, which handles cursor position correctly while correcting the date.
+      IMask(document.getElementById("loadDate"), {
+        mask: "00/00/0000",
+      });
+
+      //Restoring the values
+      window.addEventListener("DOMContentLoaded", () => {
+        const savedData = JSON.parse(localStorage.getItem("loadDetails"));
+        // console.log(savedData);
+        if (savedData) {
+          document.getElementById("loadDate").value =
+            savedData.DateOfLoading || "";
+
+          document.getElementById("vehicleNo").value =
+            savedData.vehicleNo || "";
+
+          document.getElementById("driverName").value =
+            savedData.driverName || "";
+
+          document.getElementById("miningOwner").value =
+            savedData.miningOwner || "";
+
+          document.getElementById("miningOwnerPhone").value =
+            savedData.miningOwnerPhone || "";
+
+          document.getElementById("factoryOwner").value =
+            savedData.factoryOwner || "";
+
+          document.getElementById("factoryPhone").value =
+            savedData.factoryPhone || "";
+        }
+      });
+
+      //formatting the date & adding slashes in b/w the date
+      const loadDate = document.getElementById("loadDate");
+      const dateError = document.getElementById("dateError");
+
+      // Auto-insert /
+      loadDate.addEventListener("input", (e) => {
+        let value = e.target.value.replace(/\D/g, "");
+
+        if (value.length > 2) {
+          value = value.slice(0, 2) + "/" + value.slice(2);
+        }
+
+        if (value.length > 5) {
+          value = value.slice(0, 5) + "/" + value.slice(5, 9);
+        }
+
+        e.target.value = value;
+      });
+
+      const phoneInputs = [
+        document.getElementById("miningOwnerPhone"),
+        document.getElementById("factoryPhone"),
+      ];
+
+      phoneInputs.forEach((input) => {
+        input.addEventListener("input", () => {
+          input.value = input.value.replace(/\D/g, "").slice(0, 10);
+        });
+      });
+
+      //storing the values in local storage
       document.querySelector(".save-btn").addEventListener("click", () => {
+        // const date = new Date(document.getElementById("loadDate").value);
+
+        // const dd = String(date.getDate()).padStart(2, "0");
+        // const mm = String(date.getMonth() + 1).padStart(2, "0");
+        // const yy = String(date.getFullYear());
+
+        const loadDate = document.getElementById("loadDate").value;
+        const parts = loadDate.split("/");
+        if (parts.length !== 3) {
+          showAlert("Please enter a valid date (DD/MM/YYYY)");
+          return; // Stops execution
+        }
+
+        const [dd, mm, yyyy] = loadDate.split("/").map(Number);
+
+        // Day validation
+        if (dd < 1 || dd > 31) {
+          showAlert(`Invalid day (${dd}). Day must be between 01 and 31.`);
+          return;
+        }
+
+        // Month validation
+        if (mm < 1 || mm > 12) {
+          showAlert(`Invalid month (${mm}). Month must be between 01 and 12.`);
+          return;
+        }
+
+        // Year validation
+        if (yyyy < 2000 || yyyy > 2100) {
+          showAlert(
+            `Invalid year (${yyyy}). Please enter a valid year upto 2100.`,
+          );
+          return;
+        }
+
+        // Full date validation
+        const date = new Date(yyyy, mm - 1, dd);
+
+        if (
+          date.getFullYear() !== yyyy ||
+          date.getMonth() !== mm - 1 ||
+          date.getDate() !== dd
+        ) {
+          showAlert(
+            `The date ${loadDate} is not valid. Month ${mm} does not have ${dd} days.`,
+          );
+          return;
+        }
+
+        //phone number validations
+        const miningPhone = document
+          .getElementById("miningOwnerPhone")
+          .value.trim();
+
+        const factoryPhone = document
+          .getElementById("factoryPhone")
+          .value.trim();
+
+        const mobileRegex = /^[6-9]\d{9}$/;
+
+        // Mining Owner Phone (Required)
+        if (!mobileRegex.test(miningPhone)) {
+          showAlert(
+            "Mining Owner Phone Number must be a valid 10-digit mobile number.Remember mobile numbers shuold starts with 6, 7, 8, or 9",
+          );
+          return;
+        }
+
+        // Factory Phone (Optional)
+        // Validate only if user entered a value
+        if (factoryPhone !== "" && !mobileRegex.test(factoryPhone)) {
+          showAlert(
+            "Factory Owner Phone Number must be a valid 10-digit mobile number.Remember mobile numbers shuold starts with 6, 7, 8, or 9",
+          );
+          return;
+        }
+
         const loadDetails = {
           DateOfLoading: document.getElementById("loadDate").value,
           vehicleNo: document.getElementById("vehicleNo").value,
@@ -194,10 +435,6 @@
 
         window.location.href = "index.html";
       });
-      //Date field
-      document.getElementById("loadDate").value = new Date()
-        .toISOString()
-        .split("T")[0];
     </script>
   </body>
 </html>
